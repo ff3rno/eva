@@ -38,10 +38,14 @@ export async function getOpenAIResponse(userMessage: string): Promise<string | n
       console.error('OpenAI API Error:', {
         name: error.name,
         status: error.status,
-        headers: error.headers,
         message: error.message,
-        cause: error.cause, // Log the underlying cause if present
+        code: error.code,     // error.code is a common property for APIError
+        type: error.type,     // error.type is also a common property
+        // headers: error.headers, // Headers can be verbose, log if essential
       });
+      // Log the full error object separately if it might contain more details (like 'cause' or 'error.error')
+      // This avoids TS errors if 'cause' or 'error.error' isn't strictly typed on APIError for all versions/cases.
+      console.error('Full OpenAI APIError object for detailed inspection:', error);
     } else {
       console.error('Error getting response from OpenAI (unexpected error):', error);
     }
