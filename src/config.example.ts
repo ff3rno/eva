@@ -18,7 +18,8 @@ export const openaiApiKey: string | undefined = 'YOUR_OPENAI_API_KEY_HERE';
 
 // Default OpenAI Model
 // You can change this to any model compatible with the OpenAI Chat API, e.g., 'gpt-4', 'gpt-3.5-turbo-16k'.
-export const defaultOpenAIModel: string = 'gpt-3.5-turbo';
+// The application will use the OPENAI_MODEL environment variable if set, otherwise it defaults to this value.
+export const defaultOpenAIModel: string = 'gpt-4o-mini';
 
 // Note: The actual configuration is loaded from src/config.ts.
 // If src/config.ts is not found, or if specific values are undefined there,

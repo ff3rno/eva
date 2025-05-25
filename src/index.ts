@@ -1,8 +1,12 @@
+import * as dotenv from 'dotenv';
+dotenv.config(); // Load environment variables from .env file
+
 import { bot } from './telegramBot';
 import { getOpenAIResponse } from './openAIProxy';
 import { telegramApiToken, openAIApiKey } from './config';
 
 // Check for essential API keys
+// These checks will now use values potentially sourced from .env via src/config.ts
 if (!telegramApiToken || telegramApiToken === 'YOUR_TELEGRAM_BOT_TOKEN') {
   console.error('Error: Telegram API token is not configured. Please set it in src/config.ts or environment variables.');
   process.exit(1);
