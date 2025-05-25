@@ -1,9 +1,9 @@
 import * as dotenv from 'dotenv';
 dotenv.config(); // Load environment variables from .env file
 
-import { bot } from './telegramBot';
+import { initializeBot } from './telegramBot'; // Import the initialization function
 import { getOpenAIResponse } from './openAIProxy';
-import { telegramApiToken, openAIApiKey } from './config';
+import { telegramApiToken, openaiApiKey } from './config';
 
 // Check for essential API keys
 // These checks will now use values potentially sourced from .env via src/config.ts
@@ -12,10 +12,13 @@ if (!telegramApiToken || telegramApiToken === 'YOUR_TELEGRAM_BOT_TOKEN') {
   process.exit(1);
 }
 
-if (!openAIApiKey || openAIApiKey === 'YOUR_OPENAI_API_KEY') {
+if (!openaiApiKey || openaiApiKey === 'YOUR_OPENAI_API_KEY') {
   console.error('Error: OpenAI API key is not configured. Please set it in src/config.ts or environment variables.');
   process.exit(1);
 }
+
+// Initialize the bot
+const bot = initializeBot(telegramApiToken as string);
 
 // Modify the bot's message handler
 bot.on('message', async (msg) => {

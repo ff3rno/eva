@@ -1,9 +1,9 @@
 import OpenAI from 'openai';
-import { openAIApiKey, defaultOpenAIModel } from './config';
+import { openaiApiKey, defaultOpenAIModel } from './config';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
-  apiKey: openAIApiKey,
+  apiKey: openaiApiKey,
 });
 
 // System prompt for the AI
