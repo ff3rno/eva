@@ -1,31 +1,22 @@
 import TelegramBot from 'node-telegram-bot-api';
-import { telegramApiToken } from './config';
 
-// Create a new TelegramBot instance
-const bot = new TelegramBot(telegramApiToken, { polling: true });
-
-// Basic message handler
-bot.on('message', (msg) => {
-  const chatId = msg.chat.id;
-  const messageText = msg.text;
-
-  if (messageText) {
-    console.log(`Received message from ${chatId}: ${messageText}`);
-    bot.sendMessage(chatId, `You said: ${messageText}`);
+export function initializeBot(token: string): TelegramBot {
+  if (!token) {
+    // This check is more for robustness within the function,
+    // index.ts should already prevent this.
+    throw new Error('Telegram bot token cannot be empty or undefined.');
   }
-});
+  const bot = new TelegramBot(token, { polling: true });
 
-// Error handler for polling errors
-bot.on('polling_error', (error) => {
-  console.error('Polling error:', error);
-});
+  // Moved polling_error handler here
+  bot.on('polling_error', (error) => {
+    console.error('Polling error from telegramBot.ts:', error);
+  });
 
-// Export the bot instance
-export { bot };
+  // The basic 'message' handler that echoes messages is removed.
+  // The main message handler logic is in index.ts.
 
-// Optional: A function to explicitly start the bot
-export const startTelegramBot = () => {
-  console.log('Telegram bot started and polling...');
-  // The bot starts polling when it's instantiated with { polling: true }
-  // This function can be used as an explicit entry point if desired.
-};
+  return bot;
+}
+
+// The old global 'bot' instance and 'startTelegramBot' are removed.
